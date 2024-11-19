@@ -106,7 +106,23 @@ class Board:
         Returns:
             a tuple of row, column index identifying the most constrained cell
         """
-        pass
+        mini = self.size
+        row = 0 
+        column = 0
+        for i, r in enumerate (self.rows):
+            print ()
+            for j, col in enumerate:
+                print (i, j, col)
+                if len (compile) < mini: 
+                    mini = len(col)
+                    row = i 
+                    column = j 
+                    print  ("Changed value")
+                    print (row, column, mini)
+            
+                
+
+
 
     def failure_test(self) -> bool:
         """Check if we've failed to correctly fill out the puzzle. If we find a cell
@@ -116,7 +132,12 @@ class Board:
         Returns:
             True if we have failed to fill out the puzzle, False otherwise
         """
-        pass
+        for i in range (self.size):
+            for j in range (self.size):
+                if isinstance (self.rows[i][j], list) and len (self.rows[i][j]) == 0:
+                 return True
+        return False
+
 
     def goal_test(self) -> bool:
         """Check if we've completed the puzzle (if we've placed all the numbers).
@@ -125,7 +146,7 @@ class Board:
         Returns:
             True if we've placed all numbers, False otherwise
         """
-        pass
+        return self.num_nums_placed == self.size * self.size
 
     def update(self, row: int, column: int, assignment: int) -> None:
         """Assigns the given value to the cell given by passed in row and column
@@ -139,7 +160,17 @@ class Board:
             column - index of the column to assign
             assignment - value to place at given row, column coordinate
         """
-        pass
+        self.rows[row][column] = assignment
+
+        for i in range (self.size):
+            remove_if_exists (self.rows[row][i],assignment)
+            remove_if_exists(self.rows[row][i], assignment)
+            #0,5 
+            #1,5
+
+        for i, j in self.subgrid_coordinates():
+            print (i, j)
+       
 
 
 def DFS(state: Board) -> Board:
@@ -154,7 +185,14 @@ def DFS(state: Board) -> Board:
     Returns:
         either None in the case of invalid input or a solved board
     """
-    pass
+    s = Stack ([state])
+    print (s)
+    s.push (state)
+    print (s)
+    b = s.pop()
+    print (s)
+    mcc = b.find_the_most_constrained_cell
+
 
 
 def BFS(state: Board) -> Board:
@@ -169,10 +207,22 @@ def BFS(state: Board) -> Board:
     Returns:
         either None in the case of invalid input or a solved board
     """
-    pass
+    queue = queue ([state])
+    while queue: 
+        current_state = queue.popleft ()
+        if current_state.goal_test():
+            return current_state  
+        
 
 
 if __name__ == "__main__":
+    b = Board()
+    print (b)
+    b.print_pretty()
+    b.update(3, 5, 4)
+    b.update (0, 4, 7)
+    b.update (5, 6, 1)
+    
     # uncomment the below lines once you've implemented the board class
    
     # # CODE BELOW HERE RUNS YOUR BFS/DFS
